@@ -1,0 +1,387 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "BSW статистика",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5000",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/auth/registration": {
+      "post": {
+        "tags": [
+          "Авторизация"
+        ],
+        "summary": "Регистрация пользователя",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/TokenRegistration"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Пользователь зарегестрирован"
+          },
+          "422": {
+            "description": "Отправленны некотректные данные"
+          }
+        }
+      }
+    },
+    "/auth/authorization": {
+      "post": {
+        "tags": [
+          "Авторизация"
+        ],
+        "summary": "Авторизация пользователя",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/TokenAuthorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Пользователь автиризирован"
+          },
+          "422": {
+            "description": "Логин и пароль некорректные"
+          }
+        }
+      }
+    },
+    "/auth/user": {
+      "get": {
+        "tags": [
+          "Авторизация"
+        ],
+        "summary": "Возвразает текушего авторизированного пользователя",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Пользователь автиризирован",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь неавторизирвоан"
+          }
+        }
+      }
+    },
+    "/balance/{user_id}": {
+      "get": {
+        "tags": [
+          "Проверка баланса"
+        ],
+        "summary": "Получение баланса по ID",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Баланс получен",
+            "schema": {
+              "$ref": "#/components/schemas/BalanceUser"
+            }
+          },
+          "400": {
+            "description": "Неверный Id"
+          },
+          "404": {
+            "description": "Страница не найдена"
+          }
+        }
+      }
+    },
+    "/balance/data": {
+      "get": {
+        "tags": [
+          "Проверка баланса"
+        ],
+        "summary": "Получение баланса по ID",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Data",
+            "in": "query",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Баланс получен",
+            "schema": {
+              "$ref": "#/components/schemas/BalanceUser"
+            }
+          },
+          "400": {
+            "description": "Неверный Id"
+          },
+          "404": {
+            "description": "Страница не найдена"
+          }
+        }
+      }
+    },
+    "/games/data": {
+      "get": {
+        "tags": [
+          "Плучение игр"
+        ],
+        "summary": "Получение игр по дате",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Data",
+            "in": "query",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Игра получена",
+            "schema": {
+              "$ref": "#/components/schemas/Game"
+            }
+          },
+          "400": {
+            "description": "Неверный Id"
+          },
+          "404": {
+            "description": "Страница не найдена"
+          }
+        }
+      }
+    },
+    "/games/history": {
+      "get": {
+        "tags": [
+          "Плучение игр"
+        ],
+        "summary": "Получение получение всех игр",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Игра получена",
+            "schema": {
+              "$ref": "#/components/schemas/Game"
+            }
+          },
+          "400": {
+            "description": "Неверный Id"
+          },
+          "404": {
+            "description": "Страница не найдена"
+          }
+        }
+      }
+    },
+    "/games/lvl": {
+      "get": {
+        "tags": [
+          "Плучение игр"
+        ],
+        "summary": "Получение игр по уровню",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lvl",
+            "in": "query",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Игра получена",
+            "schema": {
+              "$ref": "#/components/schemas/Game"
+            }
+          },
+          "400": {
+            "description": "Неверный Id/lvl"
+          },
+          "404": {
+            "description": "Страница не найдена"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TokenRegistration": {
+        "type": "object",
+        "properties": {
+          "nickname": {
+            "type": "string",
+            "example": "TestName"
+          },
+          "password": {
+            "type": "string",
+            "example": "0x859C2aAD442BEBfee96a2e2807d48d8908D2361e"
+          },
+          "password_confirmation": {
+            "type": "string",
+            "example": "0x859C2aAD442BEBfee96a2e2807d48d8908D2361e"
+          }
+        }
+      },
+      "TokenAuthorization": {
+        "type": "object",
+        "properties": {
+          "nickname": {
+            "type": "string",
+            "example": "TestName"
+          },
+          "password": {
+            "type": "string",
+            "example": "0x859C2aAD442BEBfee96a2e2807d48d8908D2361e"
+          }
+        }
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "57"
+          },
+          "nickname": {
+            "type": "string",
+            "example": "TestName"
+          }
+        }
+      },
+      "BalanceUser": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "57"
+          },
+          "data": {
+            "type": "data",
+            "example": "05.04.2022"
+          },
+          "balance": {
+            "type": "float",
+            "example": "235.1"
+          }
+        }
+      },
+      "Game": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "7"
+          },
+          "lvl": {
+            "type": "integer",
+            "example": "4"
+          },
+          "data": {
+            "type": "data",
+            "example": "05.07.2021"
+          },
+          "reward": {
+            "type": "float",
+            "example": "56.43"
+          }
+        }
+      }
+    }
+  }
+}
